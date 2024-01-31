@@ -26,15 +26,15 @@ import androidx.navigation.compose.rememberNavController
 import me.haile.nationalparks.compose.home.HomeScreen
 
 @Composable
-fun MemorApp() {
+fun NationalParksApp() {
     val navController = rememberNavController()
-    MemorNavHost(
+    NationalParksNavHost(
         navController = navController
     )
 }
 
 @Composable
-fun MemorNavHost(
+fun NationalParksNavHost(
     navController: NavHostController
 ) {
     val activity = (LocalContext.current as Activity)
