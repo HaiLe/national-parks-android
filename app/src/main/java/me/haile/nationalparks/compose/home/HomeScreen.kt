@@ -64,6 +64,9 @@ fun ListItem(park: Park) {
         .padding(16.dp)
         .clickable {}) {
         Text(text = park.fullName, fontWeight = FontWeight.Bold)
+        Text(text = park.states, fontWeight = FontWeight.Bold)
+        Text(text = park.description)
+        Text(text = park.directionsInfo)
     }
 }
 
