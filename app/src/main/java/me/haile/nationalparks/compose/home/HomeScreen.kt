@@ -12,58 +12,60 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import me.haile.nationalparks.data.Park
+import me.haile.nationalparks.viewmodel.HomeViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-//    homeViewModel: HomeViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel = hiltViewModel(),
 //    onArticleClick: (NewsArticle) -> Unit = {}
 ) {
-    //val myArticleList = homeViewModel.articles.observeAsState()
+    val parks = homeViewModel.parks.observeAsState()
     Scaffold(topBar = { TopAppBar(title = { Text("Home") }) },
         bottomBar = { BottomNavigationBar() }) { innerPadding ->
-        HelloContent(modifier = Modifier.padding(innerPadding))
+        HelloContent(parks = parks.value ?: listOf(), modifier = Modifier.padding(innerPadding))
     }
 }
 
 @Composable
-fun HelloContent(modifier: Modifier = Modifier) {
+fun HelloContent(parks: List<Park>, modifier: Modifier = Modifier) {
 
-    val listItems = listOf(
-        "Hello US National Park",
-        "Hello US National Park 2",
-        "Hello US National Park 3",
-        "Hello US National Park 4",
-        "Hello US National Park 5"
-    )
+//    val listItems = listOf(
+//        "Hello US National Park",
+//        "Hello US National Park 2",
+//        "Hello US National Park 3",
+//        "Hello US National Park 4",
+//        "Hello US National Park 5"
+//    )
     LazyColumn(modifier = modifier) {
-        items(listItems.size) { index ->
-            val article = listItems[index]
+        items(parks.size) { index ->
+            val park = parks[index]
             ListItem(
-                newsArticle = article,
+                park = park,
             )
         }
     }
 }
 
 @Composable
-fun ListItem(newsArticle: String) {
+fun ListItem(park: Park) {
     val context = LocalContext.current
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(16.dp)
-        .clickable {
-        }) {
-        Text(text = newsArticle, fontWeight = FontWeight.Bold)
+        .clickable {}) {
+        Text(text = park.fullName, fontWeight = FontWeight.Bold)
     }
 }
-
 
 //@Composable
 //fun BodyContent(

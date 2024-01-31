@@ -9,16 +9,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface NewsApiService {
-    @GET("everything")
+interface NPSService {
+    @GET("parks")
     suspend fun parks(
-        @Query("apiKey") clientId: String = Constants.NPS_SERVICE_API_KEY
+        @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY
     ): ParksResponse
 
     companion object {
-        private const val BASE_URL = "https://developer.nps.gov/api/v1"
+        private const val BASE_URL = "https://developer.nps.gov/api/v1/"
 
-        fun create(): NewsApiService {
+        fun create(): NPSService {
             val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
 
             val client = OkHttpClient.Builder()
@@ -30,7 +30,7 @@ interface NewsApiService {
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(NewsApiService::class.java)
+                .create(NPSService::class.java)
         }
     }
 }
