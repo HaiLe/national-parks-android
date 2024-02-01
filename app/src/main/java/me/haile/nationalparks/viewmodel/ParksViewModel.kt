@@ -14,7 +14,7 @@ import me.haile.nationalparks.utils.Logging
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class ParksViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     val npsService: NPSService,
 ) : ViewModel() {
@@ -24,12 +24,10 @@ class HomeViewModel @Inject constructor(
     val parks: LiveData<List<Park>> = _parks
 
     init {
-        // _articles.value = repository.loadArticlesFromJSON()
-        // crawlNyTimes()
-        loadNewsArticle("business", )
+        //loadNewsArticle("business", )
     }
 
-    private fun loadNewsArticle(query: String, domains: String? = null) {
+    fun loadParks() {
         viewModelScope.launch (IO){
             val response = npsService.parks()
             _parks.postValue(response.data)

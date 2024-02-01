@@ -20,16 +20,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.haile.nationalparks.data.Park
-import me.haile.nationalparks.viewmodel.HomeViewModel
+import me.haile.nationalparks.viewmodel.ParksViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel = hiltViewModel(),
+    parksViewModel: ParksViewModel = hiltViewModel(),
     onParkClick: (Park) -> Unit = {}
 ) {
-    val parks = homeViewModel.parks.observeAsState()
+    parksViewModel.loadParks()
+    val parks = parksViewModel.parks.observeAsState()
     Scaffold(topBar = { TopAppBar(title = { Text("Home") }) },
         bottomBar = { BottomNavigationBar() }) { innerPadding ->
         BodyContent(
