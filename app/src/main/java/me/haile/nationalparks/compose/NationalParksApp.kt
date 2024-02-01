@@ -24,6 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import me.haile.nationalparks.compose.home.HomeScreen
+import me.haile.nationalparks.compose.park.ParkScreen
 
 @Composable
 fun NationalParksApp() {
@@ -40,24 +41,33 @@ fun NationalParksNavHost(
     val activity = (LocalContext.current as Activity)
     NavHost(navController = navController, startDestination = Screen.Home.route) {
         composable(route = Screen.Home.route) {
-            HomeScreen()
+            HomeScreen(
+                onParkClick = {
+                    navController.navigate(
+                        Screen.Park.createRoute(
+                            parkId = it.parkCode,
+                            parkTitle = it.fullName,
+                        )
+                    )
+                }
+            )
         }
 
-//        composable(
-//            route = Screen.Article.route,
-//            arguments = Screen.Article.navArguments
-//        ) {
-//            ArticleScreen(
-//                onBackClick = { navController.navigateUp() },
-//                onFabClick = {
-//                    navController.navigateUp()
-//                }, onGoToGalleryClick = {
-//                    navController.navigate(
-//                        Screen.Gallery.createRoute("tulip")
-//                    )
-//                }
-//            )
-//        }
+        composable(
+            route = Screen.Park.route,
+            arguments = Screen.Park.navArguments
+        ) {
+            ParkScreen(
+                onBackClick = { navController.navigateUp() },
+                onFabClick = {
+                    navController.navigateUp()
+                }, onGoToGalleryClick = {
+                    navController.navigate(
+                        Screen.Gallery.createRoute("tulip")
+                    )
+                }
+            )
+        }
 //        composable(
 //            route = Screen.Gallery.route,
 //            arguments = Screen.Gallery.navArguments

@@ -27,42 +27,43 @@ import me.haile.nationalparks.viewmodel.HomeViewModel
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
-//    onArticleClick: (NewsArticle) -> Unit = {}
+    onParkClick: (Park) -> Unit = {}
 ) {
     val parks = homeViewModel.parks.observeAsState()
     Scaffold(topBar = { TopAppBar(title = { Text("Home") }) },
         bottomBar = { BottomNavigationBar() }) { innerPadding ->
-        HelloContent(parks = parks.value ?: listOf(), modifier = Modifier.padding(innerPadding))
+        BodyContent(
+            parks = parks.value ?: listOf(),
+            modifier = Modifier.padding(innerPadding),
+            onParkClick
+        )
     }
 }
 
-@Composable
-fun HelloContent(parks: List<Park>, modifier: Modifier = Modifier) {
-
-//    val listItems = listOf(
-//        "Hello US National Park",
-//        "Hello US National Park 2",
-//        "Hello US National Park 3",
-//        "Hello US National Park 4",
-//        "Hello US National Park 5"
-//    )
-    LazyColumn(modifier = modifier) {
-        items(parks.size) { index ->
-            val park = parks[index]
-            ListItem(
-                park = park,
-            )
-        }
-    }
-}
+//@Composable
+//fun HelloContent(parks: List<Park>, modifier: Modifier = Modifier) {
+//    LazyColumn(modifier = modifier) {
+//        items(parks.size) { index ->
+//            val park = parks[index]
+//            ListItem(
+//                park = park,
+//            )
+//        }
+//    }
+//}
 
 @Composable
-fun ListItem(park: Park) {
+fun ListItem(
+    park: Park,
+    onParkClick: (Park) -> Unit
+) {
     val context = LocalContext.current
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(16.dp)
-        .clickable {}) {
+        .clickable {
+            onParkClick(park)
+        }) {
         Text(text = park.fullName, fontWeight = FontWeight.Bold)
         Text(text = park.states, fontWeight = FontWeight.Bold)
         Text(text = park.description)
@@ -70,23 +71,21 @@ fun ListItem(park: Park) {
     }
 }
 
-//@Composable
-//fun BodyContent(
-//    articles: List<NewsArticle>,
-//    modifier: Modifier = Modifier,
-//    onArticleClick: (NewsArticle) -> Unit
-//) {
-//    //val itemList = listOf("Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6") // Sample list
-//    LazyColumn(modifier = modifier) {
-//        items(articles.size) { index ->
-//            val article = articles[index]
-//            ListItem(
-//                newsArticle = articles[index],
-//                onArticleClick = onArticleClick
-//            )
-//        }
-//    }
-//}
+@Composable
+fun BodyContent(
+    parks: List<Park>,
+    modifier: Modifier = Modifier,
+    onParkClick: (Park) -> Unit
+) {
+    LazyColumn(modifier = modifier) {
+        items(parks.size) { index ->
+            ListItem(
+                park = parks[index],
+                onParkClick = onParkClick
+            )
+        }
+    }
+}
 
 //@Composable
 //fun ListItem(newsArticle: NewsArticle, onArticleClick: ((NewsArticle) -> Unit)) {
