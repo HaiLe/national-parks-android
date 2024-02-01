@@ -16,24 +16,22 @@ import javax.inject.Inject
 @HiltViewModel
 class ParkViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    val npsService: NPSService,
+    private val npsService: NPSService,
 ) : ViewModel() {
-    private var queryString: String? = savedStateHandle["plantName"]
-
+    private var parkCode: String? = savedStateHandle["parkId"]
     private val _park = MutableLiveData<Park>()
     val park: LiveData<Park> = _park
 
-    init {
-        // _articles.value = repository.loadArticlesFromJSON()
-        // crawlNyTimes()
-        // loadPark("business", )
-    }
-
-    private fun loadPark(query: String, domains: String? = null) {
+    fun fetchPark() {
         viewModelScope.launch (IO){
-            val response = npsService.parks()
-            //_park.postValue(response.data)
-            Logging.log("$response")
+            if (parkCode.isNullOrEmpty()) {
+                Logging.log("parkCode is null or empty")
+                parkCode = "acad"
+            }
+            val response = npsService.park(parkCode ?: "")
+            if (response.data.isNotEmpty()) {
+                _park.postValue(response.data.first())
+            }
         }
     }
 }

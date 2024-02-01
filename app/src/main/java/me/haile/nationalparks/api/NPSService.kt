@@ -1,5 +1,6 @@
 package me.haile.nationalparks.api
 
+import me.haile.nationalparks.data.Park
 import me.haile.nationalparks.data.ParksResponse
 import me.haile.nationalparks.utils.Constants
 import okhttp3.OkHttpClient
@@ -12,6 +13,12 @@ import retrofit2.http.Query
 interface NPSService {
     @GET("parks")
     suspend fun parks(
+        @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY
+    ): ParksResponse
+
+    @GET("parks")
+    suspend fun park(
+        @Query("parkCode") parkCode: String,
         @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY
     ): ParksResponse
 

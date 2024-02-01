@@ -14,7 +14,7 @@ import me.haile.nationalparks.utils.Logging
 import javax.inject.Inject
 
 @HiltViewModel
-class ParksViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     val npsService: NPSService,
 ) : ViewModel() {

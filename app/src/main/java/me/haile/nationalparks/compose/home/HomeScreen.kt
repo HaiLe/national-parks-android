@@ -3,7 +3,9 @@ package me.haile.nationalparks.compose.home
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.BottomAppBar
@@ -20,13 +22,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.haile.nationalparks.data.Park
-import me.haile.nationalparks.viewmodel.ParksViewModel
+import me.haile.nationalparks.viewmodel.HomeViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    parksViewModel: ParksViewModel = hiltViewModel(),
+    parksViewModel: HomeViewModel = hiltViewModel(),
     onParkClick: (Park) -> Unit = {}
 ) {
     parksViewModel.loadParks()
@@ -40,18 +42,6 @@ fun HomeScreen(
         )
     }
 }
-
-//@Composable
-//fun HelloContent(parks: List<Park>, modifier: Modifier = Modifier) {
-//    LazyColumn(modifier = modifier) {
-//        items(parks.size) { index ->
-//            val park = parks[index]
-//            ListItem(
-//                park = park,
-//            )
-//        }
-//    }
-//}
 
 @Composable
 fun ListItem(
@@ -67,7 +57,9 @@ fun ListItem(
         }) {
         Text(text = park.fullName, fontWeight = FontWeight.Bold)
         Text(text = park.states, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(16.dp))
         Text(text = park.description)
+        Spacer(modifier = Modifier.height(16.dp))
         Text(text = park.directionsInfo)
     }
 }

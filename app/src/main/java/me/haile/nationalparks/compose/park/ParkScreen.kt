@@ -20,7 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
-import me.haile.nationalparks.viewmodel.ParksViewModel
+import me.haile.nationalparks.viewmodel.HomeViewModel
+import me.haile.nationalparks.viewmodel.ParkViewModel
 
 data class ParkScreenCallbacks(
     val onFabClick: () -> Unit,
@@ -38,12 +39,12 @@ fun HtmlText(htmlString: String) {
 
 @Composable
 fun ParkScreen(
-    viewModel: ParksViewModel = hiltViewModel(),
+    viewModel: ParkViewModel = hiltViewModel(),
     onFabClick: () -> Unit,
     onBackClick: () -> Unit,
     onGoToGalleryClick: () -> Unit
 ) {
-    viewModel.findPark()
+    viewModel.fetchPark()
     val park = viewModel.park.observeAsState()
     Column(
         modifier = Modifier
