@@ -94,7 +94,7 @@ fun ParkScreen(
     park.value?.let {
         Column {
             DisplayParkDetails(park = it)
-            DisplayActivities(activities = it.activities)
+            //DisplayActivities(activities = it.activities)
             DisplayTopics(topics = it.topics)
         }
 
