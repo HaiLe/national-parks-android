@@ -14,18 +14,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
-import me.haile.nationalparks.viewmodel.ParkViewModel
+import me.haile.nationalparks.viewmodel.ParksViewModel
 
 data class ParkScreenCallbacks(
     val onFabClick: () -> Unit,
@@ -43,17 +38,13 @@ fun HtmlText(htmlString: String) {
 
 @Composable
 fun ParkScreen(
-    viewModel: ParkViewModel = hiltViewModel(),
+    viewModel: ParksViewModel = hiltViewModel(),
     onFabClick: () -> Unit,
     onBackClick: () -> Unit,
     onGoToGalleryClick: () -> Unit
 ) {
-    val articleText = viewModel.park.observeAsState()
-    var isLongPressed by remember { mutableStateOf(false) }  // State to track if it's long pressed
-    var selection by remember { mutableStateOf<TextRange?>(null) }
-    val showCustomAction = selection != null
-    //var showDialog by remember { mutableStateOf(false) }  // State to control dialog visibility
-
+    viewModel.findPark()
+    val park = viewModel.park.observeAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -63,7 +54,7 @@ fun ParkScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = viewModel.park.value?.fullName ?: "",
+            text = park.value?.fullName ?: "",
             style = MaterialTheme.typography.headlineLarge
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -114,12 +105,6 @@ fun ParkScreen(
 //        }
 
         // Your custom action UI, shown when text is selected
-        if (showCustomAction) {
-            Button(onClick = { /* Perform your custom action */ }) {
-                Text("Perform Custom Action")
-            }
-        }
-
         Spacer(modifier = Modifier.height(8.dp))
         Button(onClick = { onGoToGalleryClick() }) {
             Text(text = "Go to Gallery Screen")
