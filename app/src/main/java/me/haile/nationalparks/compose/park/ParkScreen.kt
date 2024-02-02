@@ -79,7 +79,7 @@ fun ParkScreen(
     viewModel: ParkViewModel = hiltViewModel(),
     onFabClick: () -> Unit,
     onBackClick: () -> Unit,
-    onGoToGalleryClick: () -> Unit
+    onGoToGalleryClick: (galleryQuery: String) -> Unit
 ) {
     viewModel.fetchPark()
     val park = viewModel.park.observeAsState()
@@ -88,7 +88,7 @@ fun ParkScreen(
             DisplayParkDetails(park = it)
             //DisplayActivities(activities = it.activities)
             //DisplayTopics(topics = it.topics)
-            Button(onClick = { onGoToGalleryClick() }) {
+            Button(onClick = { onGoToGalleryClick(it.fullName) }) {
                 Text(text = "Go to Gallery Screen")
             }
         }

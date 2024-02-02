@@ -64,7 +64,7 @@ fun NationalParksNavHost(
                     navController.navigateUp()
                 }, onGoToGalleryClick = {
                     navController.navigate(
-                        Screen.Gallery.createRoute("tulip")
+                        Screen.Gallery.createRoute(it)
                     )
                 }
             )
