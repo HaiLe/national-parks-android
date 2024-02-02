@@ -39,25 +39,21 @@ import me.haile.nationalparks.viewmodel.HomeViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    parksViewModel: HomeViewModel = hiltViewModel(),
-    onParkClick: (Park) -> Unit = {}
+    parksViewModel: HomeViewModel = hiltViewModel(), onParkClick: (Park) -> Unit = {}
 ) {
     //parksViewModel.loadParks()
     //val parks = parksViewModel.parks.observeAsState()
     Scaffold(topBar = { TopAppBar(title = { Text("Home") }) },
         bottomBar = { BottomNavigationBar() }) { innerPadding ->
         BodyContent(
-            parks = parksViewModel.parksData,
-            modifier = Modifier.padding(innerPadding),
-            onParkClick
+            parks = parksViewModel.parksData, modifier = Modifier.padding(innerPadding), onParkClick
         )
     }
 }
 
 @Composable
 fun ListItem(
-    park: Park,
-    onParkClick: (Park) -> Unit
+    park: Park, onParkClick: (Park) -> Unit
 ) {
     val context = LocalContext.current
     Column(modifier = Modifier
@@ -77,73 +73,17 @@ fun ListItem(
 
 @Composable
 fun BodyContent(
-    parks: Flow<PagingData<Park>>,
-    modifier: Modifier = Modifier,
-    onParkClick: (Park) -> Unit
+    parks: Flow<PagingData<Park>>, modifier: Modifier = Modifier, onParkClick: (Park) -> Unit
 ) {
-//    LazyColumn(modifier = modifier) {
-//        items(parks.size) { index ->
-//            ListItem(
-//                park = parks[index],
-//                onParkClick = onParkClick
-//            )
-//        }
-//    }
-
     val pagingItems: LazyPagingItems<Park> = parks.collectAsLazyPagingItems()
-        LazyColumn(modifier = modifier) {
+    LazyColumn(modifier = modifier) {
         items(pagingItems.itemCount) { index ->
             ListItem(
-                park = pagingItems[index] ?: return@items,
-                onParkClick = onParkClick
+                park = pagingItems[index] ?: return@items, onParkClick = onParkClick
             )
         }
     }
-
-//    LazyVerticalGrid(
-//        columns = GridCells.Fixed(2),
-//        modifier = modifier,
-//        contentPadding = PaddingValues(all = dimensionResource(id = R.dimen.card_side_margin))
-//    ) {
-//        // TODO update this implementation once paging Compose supports LazyGridScope
-//        // See: https://issuetracker.google.com/issues/178087310
-//        items(
-//            count = pagingItems.itemCount,
-//            key = { index ->
-//                val park = pagingItems[index]
-//                "${ park?.id ?: ""}${index}"
-//            }
-//        ) { index ->
-//            val park = pagingItems[index] ?: return@items
-////            PhotoListItem(photo = photo) {
-////                //onPhotoClick(photo)
-////            }
-//            ListItem(park = park, onParkClick = onParkClick)
-//        }
-//    }
-
 }
-
-//@Composable
-//fun ListItem(newsArticle: NewsArticle, onArticleClick: ((NewsArticle) -> Unit)) {
-//    val context = LocalContext.current
-//    Column(modifier = Modifier
-//        .fillMaxWidth()
-//        .padding(16.dp)
-//        .clickable {
-//            val sharedPreferencesManager = SharedPreferencesManager(context = context)
-//            // Save a string
-//            sharedPreferencesManager.saveString(SharedPreferencesManager.CLICKED_LINK_KEY, newsArticle.url)
-//
-//            // Retrieve the string
-//            onArticleClick(
-//              newsArticle
-//            )
-//        }) {
-//        Text(text = newsArticle.title, fontWeight = FontWeight.Bold)
-//        Text(text = newsArticle.description)
-//    }
-//}
 
 @Composable
 fun BottomNavigationBar() {
