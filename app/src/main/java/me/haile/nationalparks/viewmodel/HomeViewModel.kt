@@ -27,6 +27,15 @@ class HomeViewModel @Inject constructor(
     private val _park = MutableLiveData<Park>()
     val park: LiveData<Park> = _park
 
+    // TODO FEATURE1: how to incorporate paging data source
+    // https://developer.android.com/topic/libraries/architecture/paging/v3-overview
+
+    // TODO FEATURE1: how to incorporate work manager
+    // https://developer.android.com/topic/libraries/architecture/workmanager/advanced/coroutineworker
+
+    // TODO FEATURE1: how does repostiory pattern work with hilt
+    // https://developer.android.com/training/dependency-injection/hilt-jetpack
+
     fun loadParks() {
         _parks.value?.let {
             return

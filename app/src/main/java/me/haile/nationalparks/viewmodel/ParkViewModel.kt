@@ -24,10 +24,6 @@ class ParkViewModel @Inject constructor(
 
     fun fetchPark() {
         viewModelScope.launch (IO){
-            if (parkCode.isNullOrEmpty()) {
-                Logging.log("parkCode is null or empty")
-                parkCode = "acad"
-            }
             val response = npsService.park(parkCode ?: "")
             if (response.data.isNotEmpty()) {
                 _park.postValue(response.data.first())

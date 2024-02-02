@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import me.haile.nationalparks.compose.gallery.GalleryScreen
 import me.haile.nationalparks.compose.home.HomeScreen
 import me.haile.nationalparks.compose.park.ParkScreen
 
@@ -68,20 +69,20 @@ fun NationalParksNavHost(
                 }
             )
         }
-//        composable(
-//            route = Screen.Gallery.route,
-//            arguments = Screen.Gallery.navArguments
-//        ) {
-//            GalleryScreen()
-////                onPhotoClick = {
-////                    val uri = Uri.parse(it.user.attributionUrl)
-////                    val intent = Intent(Intent.ACTION_VIEW, uri)
-////                    activity.startActivity(intent)
-////                },
-////                onUpClick = {
-////                    navController.navigateUp()
-////                })
-//        }
+        composable(
+            route = Screen.Gallery.route,
+            arguments = Screen.Gallery.navArguments
+        ) {
+            GalleryScreen()
+//                onPhotoClick = {
+//                    val uri = Uri.parse(it.user.attributionUrl)
+//                    val intent = Intent(Intent.ACTION_VIEW, uri)
+//                    activity.startActivity(intent)
+//                },
+//                onUpClick = {
+//                    navController.navigateUp()
+//                })
+        }
     }
 }
 

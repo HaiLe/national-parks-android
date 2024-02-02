@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -86,7 +87,10 @@ fun ParkScreen(
         Column {
             DisplayParkDetails(park = it)
             //DisplayActivities(activities = it.activities)
-            DisplayTopics(topics = it.topics)
+            //DisplayTopics(topics = it.topics)
+            Button(onClick = { onGoToGalleryClick() }) {
+                Text(text = "Go to Gallery Screen")
+            }
         }
 
 //        Spacer(modifier = Modifier.height(20.dp))

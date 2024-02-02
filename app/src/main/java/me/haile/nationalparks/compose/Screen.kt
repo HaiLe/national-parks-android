@@ -49,7 +49,7 @@ sealed class Screen(
     }
 
     data object Gallery : Screen(
-        route = "gallery/{plantName}", navArguments = listOf(navArgument("plantName") {
+        route = "gallery/{query}", navArguments = listOf(navArgument("query") {
             type = NavType.StringType
         })
     ) {
