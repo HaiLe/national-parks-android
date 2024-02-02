@@ -13,6 +13,8 @@ import retrofit2.http.Query
 interface NPSService {
     @GET("parks")
     suspend fun parks(
+        @Query("start") start: Int,
+        @Query("limit") limit: Int,
         @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY
     ): ParksResponse
 

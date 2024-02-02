@@ -19,7 +19,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideNewsApiService(): NPSService {
+    fun provideNPSService(): NPSService {
         return NPSService.create()
     }
 }

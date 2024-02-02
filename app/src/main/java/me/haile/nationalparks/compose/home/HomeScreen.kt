@@ -3,11 +3,14 @@ package me.haile.nationalparks.compose.home
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -17,11 +20,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import me.haile.memor.compose.plantlist.PhotoListItem
+import me.haile.nationalparks.R
 import me.haile.nationalparks.data.Park
+import me.haile.nationalparks.data.UnsplashPhoto
 import me.haile.nationalparks.viewmodel.HomeViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -31,12 +42,12 @@ fun HomeScreen(
     parksViewModel: HomeViewModel = hiltViewModel(),
     onParkClick: (Park) -> Unit = {}
 ) {
-    parksViewModel.loadParks()
-    val parks = parksViewModel.parks.observeAsState()
+    //parksViewModel.loadParks()
+    //val parks = parksViewModel.parks.observeAsState()
     Scaffold(topBar = { TopAppBar(title = { Text("Home") }) },
         bottomBar = { BottomNavigationBar() }) { innerPadding ->
         BodyContent(
-            parks = parks.value ?: listOf(),
+            parks = parksViewModel.parksData,
             modifier = Modifier.padding(innerPadding),
             onParkClick
         )
@@ -66,18 +77,51 @@ fun ListItem(
 
 @Composable
 fun BodyContent(
-    parks: List<Park>,
+    parks: Flow<PagingData<Park>>,
     modifier: Modifier = Modifier,
     onParkClick: (Park) -> Unit
 ) {
-    LazyColumn(modifier = modifier) {
-        items(parks.size) { index ->
+//    LazyColumn(modifier = modifier) {
+//        items(parks.size) { index ->
+//            ListItem(
+//                park = parks[index],
+//                onParkClick = onParkClick
+//            )
+//        }
+//    }
+
+    val pagingItems: LazyPagingItems<Park> = parks.collectAsLazyPagingItems()
+        LazyColumn(modifier = modifier) {
+        items(pagingItems.itemCount) { index ->
             ListItem(
-                park = parks[index],
+                park = pagingItems[index] ?: return@items,
                 onParkClick = onParkClick
             )
         }
     }
+
+//    LazyVerticalGrid(
+//        columns = GridCells.Fixed(2),
+//        modifier = modifier,
+//        contentPadding = PaddingValues(all = dimensionResource(id = R.dimen.card_side_margin))
+//    ) {
+//        // TODO update this implementation once paging Compose supports LazyGridScope
+//        // See: https://issuetracker.google.com/issues/178087310
+//        items(
+//            count = pagingItems.itemCount,
+//            key = { index ->
+//                val park = pagingItems[index]
+//                "${ park?.id ?: ""}${index}"
+//            }
+//        ) { index ->
+//            val park = pagingItems[index] ?: return@items
+////            PhotoListItem(photo = photo) {
+////                //onPhotoClick(photo)
+////            }
+//            ListItem(park = park, onParkClick = onParkClick)
+//        }
+//    }
+
 }
 
 //@Composable
