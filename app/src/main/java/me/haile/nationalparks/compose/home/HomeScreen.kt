@@ -45,7 +45,7 @@ fun HomeScreen(
 fun ListItem(
     park: Park, onParkClick: (Park) -> Unit
 ) {
-    val context = LocalContext.current
+    LocalContext.current
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(16.dp)
