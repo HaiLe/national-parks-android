@@ -57,7 +57,7 @@ fun ListItem(
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = park.description)
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = park.directionsInfo)
+//        Text(text = park.directionsInfo)
     }
 }
 

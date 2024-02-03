@@ -12,12 +12,18 @@ import javax.inject.Inject
 class HomeRepository @Inject constructor(private val service: NPSService) {
     fun getParksStream(): Flow<PagingData<Park>> {
         return Pager(
-            config = PagingConfig(enablePlaceholders = false, pageSize = NETWORK_PAGE_SIZE),
+            config = PagingConfig(
+                enablePlaceholders = false,
+                pageSize = NETWORK_PAGE_SIZE,
+                initialLoadSize = NETWORK_PAGE_SIZE,
+                prefetchDistance = 10,       // Load next page when 10 items are left to be scrolled
+                maxSize = 500
+            ),
             pagingSourceFactory = { ParksPagingSource(service) }
         ).flow
     }
 
     companion object {
-        private const val NETWORK_PAGE_SIZE = 50
+        private const val NETWORK_PAGE_SIZE = 20
     }
 }

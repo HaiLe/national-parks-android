@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import me.haile.nationalparks.api.NPSService
 import me.haile.nationalparks.data.Park
+import me.haile.nationalparks.utils.Logging
 
 private const val PARKS_STARTING_INDEX_PAGE = 0
 class ParksPagingSource(
@@ -13,12 +14,16 @@ class ParksPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Park> {
         val page = params.key ?: PARKS_STARTING_INDEX_PAGE
         return try {
+            Logging.log("ParksPagingSource - load - page: $page")
+            Logging.log("ParksPagingSource - load - loadSize: ${params.loadSize}")
             val response = service.parks(start = page, params.loadSize)
             val parks = response.data
+            val totalPages = response.total.toInt()/params.loadSize
+            Logging.log("totalPages: ${totalPages}")
             LoadResult.Page(
                 data = parks,
                 prevKey = if (page == PARKS_STARTING_INDEX_PAGE) null else page - 1,
-                nextKey = if (page == response.total.toInt()) null else page + 1
+                nextKey = if (page == totalPages) null else page + 1
             )
         } catch (exception: Throwable) {
             LoadResult.Error(exception)
