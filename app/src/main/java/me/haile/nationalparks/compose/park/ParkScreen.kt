@@ -17,6 +17,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.haile.nationalparks.compose.common.HeaderText
 import me.haile.nationalparks.compose.common.HorizontalImageLibrary
+import me.haile.nationalparks.compose.common.MapViewComposable
 import me.haile.nationalparks.compose.common.Separator
 import me.haile.nationalparks.compose.common.StandardText
 import me.haile.nationalparks.data.Activity
@@ -41,6 +42,8 @@ fun HtmlText(htmlString: String) {
 @Composable
 fun DisplayParkDetails(park: Park) {
     HeaderText(park.name)
+    Separator()
+    MapViewComposable(park.latitude.toDouble(), park.longitude.toDouble())
     Separator()
     StandardText(text = park.url)
     Separator()
