@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import me.haile.nationalparks.compose.common.AddressList
 import me.haile.nationalparks.compose.common.HeaderText
 import me.haile.nationalparks.compose.common.HorizontalImageLibrary
 import me.haile.nationalparks.compose.common.MapViewComposable
@@ -26,8 +29,7 @@ import me.haile.nationalparks.data.Topic
 import me.haile.nationalparks.viewmodel.ParkViewModel
 
 data class ParkScreenCallbacks(
-    val onFabClick: () -> Unit,
-    val onBackClick: () -> Unit
+    val onFabClick: () -> Unit, val onBackClick: () -> Unit
 )
 
 @Composable
@@ -42,6 +44,7 @@ fun HtmlText(htmlString: String) {
 @Composable
 fun DisplayParkDetails(park: Park) {
     HeaderText(park.name)
+    AddressList(addresses = park.addresses)
     Separator()
     MapViewComposable(park.latitude.toDouble(), park.longitude.toDouble())
     Separator()
@@ -85,8 +88,13 @@ fun ParkScreen(
 ) {
     viewModel.fetchPark()
     val park = viewModel.park.observeAsState()
+    val scrollState = rememberScrollState()
     park.value?.let {
-        Column (modifier = Modifier.padding(16.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .verticalScroll(scrollState)
+        ) {
             DisplayParkDetails(park = it)
             Separator()
             if (it.images.isNotEmpty()) {
