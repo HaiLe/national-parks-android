@@ -20,7 +20,7 @@ data class Park(
     val directionsUrl: String,
     val operatingHours: List<OperatingHour>,
     val addresses: List<Address>,
-    val images: List<Image>,
+    val images: List<ImageItem>,
     val weatherInfo: String,
     val name: String,
     val designation: String,

@@ -24,6 +24,9 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
+import me.haile.nationalparks.compose.common.HeaderText
+import me.haile.nationalparks.compose.common.Separator
+import me.haile.nationalparks.compose.common.StandardText
 import me.haile.nationalparks.data.Park
 import me.haile.nationalparks.viewmodel.HomeViewModel
 
@@ -52,12 +55,11 @@ fun ListItem(
         .clickable {
             onParkClick(park)
         }) {
-        Text(text = park.fullName, fontWeight = FontWeight.Bold)
-        Text(text = park.states, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = park.description)
-        Spacer(modifier = Modifier.height(16.dp))
-//        Text(text = park.directionsInfo)
+        HeaderText(text = park.name)
+        StandardText(text = park.states)
+        Separator()
+        StandardText(text = park.description)
+        Separator()
     }
 }
 

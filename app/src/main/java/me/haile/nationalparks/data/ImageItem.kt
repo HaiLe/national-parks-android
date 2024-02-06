@@ -1,6 +1,6 @@
 package me.haile.nationalparks.data
 
-data class ImageData(
+data class ImageItem(
     val url: String,
     val credit: String,
     val altText: String,
