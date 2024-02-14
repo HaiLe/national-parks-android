@@ -19,11 +19,7 @@ fun HeaderText(text: String) {
         text = text,
         modifier = Modifier
             .fillMaxWidth(),
-        style = TextStyle(
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
+        style = MaterialTheme.typography.displaySmall
     )
 }
 @Composable
