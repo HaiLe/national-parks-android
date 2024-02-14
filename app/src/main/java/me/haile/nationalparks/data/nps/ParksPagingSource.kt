@@ -18,12 +18,15 @@ class ParksPagingSource(
             Logging.log("ParksPagingSource - load - loadSize: ${params.loadSize}")
             val response = service.parks(start = page, params.loadSize)
             val parks = response.data.filter { it.designation == "National Park" }
-            val totalPages = response.total.toInt()/params.loadSize
+            val totalPages = response.total.toInt()
+            for (p in parks) {
+                Logging.log(p.name)
+            }
             Logging.log("totalPages: ${totalPages}")
             LoadResult.Page(
                 data = parks,
-                prevKey = if (page == PARKS_STARTING_INDEX_PAGE) null else page - 1,
-                nextKey = if (page == totalPages) null else page + 1
+                prevKey = if (page == PARKS_STARTING_INDEX_PAGE) null else page - params.loadSize - 1,
+                nextKey = if (page > totalPages) null else page + params.loadSize
             )
         } catch (exception: Throwable) {
             LoadResult.Error(exception)
