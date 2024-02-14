@@ -24,6 +24,6 @@ class HomeRepository @Inject constructor(private val service: NPSService) {
     }
 
     companion object {
-        private const val NETWORK_PAGE_SIZE = 20
+        private const val NETWORK_PAGE_SIZE = 50
     }
 }

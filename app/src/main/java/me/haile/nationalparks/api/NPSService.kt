@@ -15,7 +15,7 @@ interface NPSService {
     suspend fun parks(
         @Query("start") start: Int,
         @Query("limit") limit: Int,
-        @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY
+        @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY,
     ): ParksResponse
 
     @GET("parks")

@@ -17,7 +17,7 @@ class ParksPagingSource(
             Logging.log("ParksPagingSource - load - page: $page")
             Logging.log("ParksPagingSource - load - loadSize: ${params.loadSize}")
             val response = service.parks(start = page, params.loadSize)
-            val parks = response.data
+            val parks = response.data.filter { it.designation == "National Park" }
             val totalPages = response.total.toInt()/params.loadSize
             Logging.log("totalPages: ${totalPages}")
             LoadResult.Page(
