@@ -3,6 +3,7 @@ package me.haile.nationalparks.compose.common
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,10 +32,7 @@ fun StandardText(text: String) {
         text = text,
         modifier = Modifier
             .fillMaxWidth(),
-        style = TextStyle(
-            fontSize = 14.sp,
-            color = Color.Gray
-        )
+        style = MaterialTheme.typography.bodyMedium
     )
 }
 @Composable

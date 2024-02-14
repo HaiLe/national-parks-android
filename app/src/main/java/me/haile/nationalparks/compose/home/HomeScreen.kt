@@ -3,9 +3,7 @@ package me.haile.nationalparks.compose.home
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.BottomAppBar
@@ -16,7 +14,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,6 +25,7 @@ import me.haile.nationalparks.compose.common.HeaderText
 import me.haile.nationalparks.compose.common.Separator
 import me.haile.nationalparks.compose.common.StandardText
 import me.haile.nationalparks.data.Park
+import me.haile.nationalparks.ui.NationalParksTheme
 import me.haile.nationalparks.viewmodel.HomeViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -95,5 +93,7 @@ fun BottomNavigationBar() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    HomeScreen()
+    NationalParksTheme {
+        HomeScreen()
+    }
 }
