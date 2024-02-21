@@ -26,6 +26,7 @@ import me.haile.nationalparks.compose.common.Separator
 import me.haile.nationalparks.compose.common.StandardText
 import me.haile.nationalparks.data.Park
 import me.haile.nationalparks.ui.NationalParksTheme
+import me.haile.nationalparks.utils.CommonUtils
 import me.haile.nationalparks.viewmodel.HomeViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -54,7 +55,7 @@ fun ListItem(
             onParkClick(park)
         }) {
         HeaderText(text = park.name)
-        StandardText(text = park.states)
+        StandardText(text = CommonUtils.getListOfStateNames(park.states).toString())
         Separator()
         StandardText(text = park.description)
         Separator()
@@ -77,7 +78,7 @@ fun BodyContent(
 
 @Composable
 fun BottomNavigationBar() {
-    BottomAppBar {
+//    BottomAppBar {
 //            BottomNavigation {
 //                BottomNavigationItem(
 //                    selected = true, // You can control the selected state as needed
@@ -87,7 +88,7 @@ fun BottomNavigationBar() {
 //                )
 //                // Add more BottomNavigationItem here as needed
 //            }
-    }
+//    }
 }
 
 @Preview(showBackground = true)
