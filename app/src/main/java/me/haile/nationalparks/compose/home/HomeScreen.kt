@@ -54,7 +54,6 @@ fun ListItem(
             onParkClick(park)
         }) {
         HeaderText(text = park.name)
-        StandardText(text = park.relevanceScore.toString())
         StandardText(text = park.states)
         Separator()
         StandardText(text = park.description)
