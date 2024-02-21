@@ -2,7 +2,6 @@ package me.haile.nationalparks.api
 
 import me.haile.nationalparks.data.AudiosResponse
 import me.haile.nationalparks.data.GalleriesResponse
-import me.haile.nationalparks.data.Park
 import me.haile.nationalparks.data.ParksResponse
 import me.haile.nationalparks.data.VideosResponse
 import me.haile.nationalparks.utils.Constants
@@ -55,7 +54,6 @@ interface NPSService {
         @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY,
         @Query("limit") limit: Int = 100,
     ): AudiosResponse
-
 
     companion object {
         private const val BASE_URL = "https://developer.nps.gov/api/v1/"
