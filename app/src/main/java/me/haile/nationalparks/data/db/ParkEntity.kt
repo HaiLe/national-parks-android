@@ -1,10 +1,11 @@
 package me.haile.nationalparks.data.db
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Entity(tableName = "parks")
+@Entity(tableName = "favorite_parks")
 data class ParkEntity(
-    val id: String,
+    @PrimaryKey val id: String,
     val url: String,
     val fullName: String,
     val parkCode: String,
@@ -13,9 +14,6 @@ data class ParkEntity(
     val longitude: String,
     val latLong: String,
     val states: String,
-    val entranceFees: List<Any>, // Assuming it's an empty array, replace with proper type if needed
-    val entrancePasses: List<Any>, // Assuming it's an empty array, replace with proper type if needed
-    val fees: List<Any>, // Assuming it's an empty array, replace with proper type if needed
     val directionsInfo: String,
     val directionsUrl: String,
     val weatherInfo: String,

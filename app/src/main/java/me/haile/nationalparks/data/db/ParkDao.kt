@@ -14,8 +14,8 @@ interface ParkDao {
     @Delete
     fun deletePark(park: ParkEntity)
 
-    @Query("SELECT * FROM favorite_parks WHERE id = :parkId")
-    fun getParkById(parkId: String): ParkEntity
+    @Query("SELECT * FROM favorite_parks WHERE parkCode = :parkCode")
+    fun getParkByParkCode(parkCode: String): ParkEntity
 
     // Add more queries as needed
 }
