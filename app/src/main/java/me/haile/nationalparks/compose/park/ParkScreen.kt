@@ -50,6 +50,7 @@ fun DisplayParkDetails(park: Park) {
     Separator()
     StandardText(text = park.url)
     Separator()
+    HeaderText(text = "About")
     StandardText(text = park.description)
     Separator()
     StandardText(text = park.directionsInfo)
@@ -96,6 +97,7 @@ fun ParkScreen(
                 .verticalScroll(scrollState)
         ) {
             DisplayParkDetails(park = it)
+            HeaderText(text = "Gallery")
             Separator()
             if (it.images.isNotEmpty()) {
                 HorizontalImageLibrary(imageItems = it.images)
