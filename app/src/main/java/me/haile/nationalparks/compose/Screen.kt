@@ -55,4 +55,12 @@ sealed class Screen(
     ) {
         fun createRoute(plantName: String) = "gallery/${plantName}"
     }
+
+    data object  ThingsToDo : Screen(
+        route = "thingstodo/{parkCode}", navArguments = listOf(navArgument("parkCode") {
+            type = NavType.StringType
+        })
+    ) {
+        fun createRoute(parkCode: String) = "thingstodo/${parkCode}"
+    }
 }

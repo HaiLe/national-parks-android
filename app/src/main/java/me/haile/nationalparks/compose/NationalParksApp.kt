@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import me.haile.nationalparks.compose.gallery.GalleryScreen
 import me.haile.nationalparks.compose.home.HomeScreen
 import me.haile.nationalparks.compose.park.ParkScreen
+import me.haile.nationalparks.compose.thingstodo.ThingsTodoScreen
 
 @Composable
 fun NationalParksApp() {
@@ -66,7 +67,24 @@ fun NationalParksNavHost(
                     navController.navigate(
                         Screen.Gallery.createRoute(it)
                     )
+                },
+                onGoToThingsToDoClick = {
+                    navController.navigate(
+                        Screen.ThingsToDo.createRoute(it)
+                    )
                 }
+            )
+        }
+
+        composable(
+            route = Screen.ThingsToDo.route,
+            arguments = Screen.ThingsToDo.navArguments
+        ) {
+            ThingsTodoScreen(
+//                onBackClick = { navController.navigateUp() },
+//                onFabClick = {
+//                    navController.navigateUp()
+//                }
             )
         }
         composable(

@@ -3,8 +3,6 @@ package me.haile.nationalparks.compose.park
 import android.text.Html
 import android.widget.TextView
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
@@ -85,7 +83,8 @@ fun ParkScreen(
     viewModel: ParkViewModel = hiltViewModel(),
     onFabClick: () -> Unit,
     onBackClick: () -> Unit,
-    onGoToGalleryClick: (galleryQuery: String) -> Unit
+    onGoToGalleryClick: (galleryQuery: String) -> Unit,
+    onGoToThingsToDoClick: (parkCode: String) -> Unit
 ) {
     viewModel.fetchPark()
     val park = viewModel.park.observeAsState()
@@ -105,6 +104,10 @@ fun ParkScreen(
             Separator()
             Button(onClick = { onGoToGalleryClick(it.fullName) }) {
                 Text(text = "Go to Gallery Screen")
+            }
+            Separator()
+            Button(onClick = { onGoToThingsToDoClick(it.parkCode) }) {
+                Text(text = "Go to Things To Do screen")
             }
         }
 
