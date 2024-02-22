@@ -40,7 +40,7 @@ fun HomeScreen(
     Scaffold(topBar = { TopAppBar(title = { Text("Home") }) },
         bottomBar = { BottomNavigationBar() }) { innerPadding ->
         BodyContent(
-            parks = parksViewModel.parksData, modifier = Modifier.padding(innerPadding), onParkClick
+            parks = parksViewModel.parksData, modifier = Modifier.padding(innerPadding), onParkClick, parksViewModel
         )
 //        BodyContent1(
 //            parksLiveData = parksViewModel.favoriteParksLiveData, modifier = Modifier.padding(innerPadding), onParkClick
@@ -50,13 +50,15 @@ fun HomeScreen(
 
 @Composable
 fun ListItem(
-    park: Park, onParkClick: (Park) -> Unit
+    park: Park, onParkClick: (Park) -> Unit, parksViewModel: HomeViewModel
 ) {
     LocalContext.current
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(16.dp)
         .clickable {
+            // add to favorites
+            parksViewModel.addParkToFavoriteList(park)
             onParkClick(park)
         }) {
         HeaderText(text = park.name)
@@ -69,13 +71,13 @@ fun ListItem(
 
 @Composable
 fun BodyContent(
-    parks: Flow<PagingData<Park>>, modifier: Modifier = Modifier, onParkClick: (Park) -> Unit
+    parks: Flow<PagingData<Park>>, modifier: Modifier = Modifier, onParkClick: (Park) -> Unit, parksViewModel: HomeViewModel
 ) {
     val pagingItems: LazyPagingItems<Park> = parks.collectAsLazyPagingItems()
     LazyColumn(modifier = modifier) {
         items(pagingItems.itemCount) { index ->
             ListItem(
-                park = pagingItems[index] ?: return@items, onParkClick = onParkClick
+                park = pagingItems[index] ?: return@items, onParkClick = onParkClick, parksViewModel
             )
         }
     }
@@ -83,7 +85,9 @@ fun BodyContent(
 
 @Composable
 fun BodyContent1(
-    parksLiveData: LiveData<List<ParkEntity>>, modifier: Modifier = Modifier, onParkClick: (Park) -> Unit
+    parksLiveData: LiveData<List<ParkEntity>>,
+    modifier: Modifier = Modifier,
+    onParkClick: (Park) -> Unit
 ) {
     val parks = parksLiveData.value ?: emptyList()
     LazyColumn(modifier = modifier) {

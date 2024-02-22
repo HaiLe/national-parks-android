@@ -14,10 +14,6 @@ data class ParkEntity(
     val longitude: String,
     val latLong: String,
     val states: String,
-    val directionsInfo: String,
-    val directionsUrl: String,
-    val weatherInfo: String,
     val name: String,
     val designation: String,
-    val relevanceScore: Double
 )

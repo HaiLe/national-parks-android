@@ -9,10 +9,10 @@ import androidx.room.Query
 @Dao
 interface ParkDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPark(park: ParkEntity)
+    suspend fun insertPark(park: ParkEntity) : Long
 
     @Delete
-    fun deletePark(park: ParkEntity)
+    suspend fun deletePark(parkCode: String)
 
     @Query("SELECT * FROM favorite_parks WHERE parkCode = :parkCode")
     fun getParkByParkCode(parkCode: String): ParkEntity
