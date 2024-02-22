@@ -86,7 +86,7 @@ dependencies {
     // ACCOMPANIST
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.34.0"
 
-    def room_version = "2.4.2"
+    def room_version = "2.6.1"
 
     // ROOM
     // Add Room dependencies

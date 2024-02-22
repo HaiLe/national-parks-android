@@ -11,8 +11,8 @@ interface ParkDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPark(park: ParkEntity) : Long
 
-    @Delete
-    suspend fun deletePark(parkCode: String)
+//    @Delete
+//    suspend fun deletePark(parkCode: String)
 
     @Query("SELECT * FROM favorite_parks WHERE parkCode = :parkCode")
     fun getParkByParkCode(parkCode: String): ParkEntity
