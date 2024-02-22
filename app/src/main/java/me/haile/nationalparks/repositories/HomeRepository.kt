@@ -6,10 +6,15 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import me.haile.nationalparks.api.NPSService
 import me.haile.nationalparks.data.Park
+import me.haile.nationalparks.data.db.ParkDao
+import me.haile.nationalparks.data.db.ParkEntity
 import me.haile.nationalparks.data.nps.ParksPagingSource
 import javax.inject.Inject
 
-class HomeRepository @Inject constructor(private val service: NPSService) {
+class HomeRepository @Inject constructor(
+    private val service: NPSService,
+    private val parkDao: ParkDao
+) {
     fun getParksStream(): Flow<PagingData<Park>> {
         return Pager(
             config = PagingConfig(
@@ -21,6 +26,10 @@ class HomeRepository @Inject constructor(private val service: NPSService) {
             ),
             pagingSourceFactory = { ParksPagingSource(service) }
         ).flow
+    }
+
+    fun getFavoriteParks() : List<ParkEntity> {
+        return parkDao.getFavoriteParks()
     }
 
     companion object {

@@ -17,5 +17,8 @@ interface ParkDao {
     @Query("SELECT * FROM favorite_parks WHERE parkCode = :parkCode")
     fun getParkByParkCode(parkCode: String): ParkEntity
 
+    @Query("SELECT * FROM favorite_parks")
+    fun getFavoriteParks(): List<ParkEntity>
+
     // Add more queries as needed
 }

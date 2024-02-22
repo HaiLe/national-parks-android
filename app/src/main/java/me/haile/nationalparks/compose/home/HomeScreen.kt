@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -25,6 +26,7 @@ import me.haile.nationalparks.compose.common.HeaderText
 import me.haile.nationalparks.compose.common.Separator
 import me.haile.nationalparks.compose.common.StandardText
 import me.haile.nationalparks.data.Park
+import me.haile.nationalparks.data.db.ParkEntity
 import me.haile.nationalparks.ui.NationalParksTheme
 import me.haile.nationalparks.utils.CommonUtils
 import me.haile.nationalparks.viewmodel.HomeViewModel
@@ -40,6 +42,9 @@ fun HomeScreen(
         BodyContent(
             parks = parksViewModel.parksData, modifier = Modifier.padding(innerPadding), onParkClick
         )
+//        BodyContent1(
+//            parksLiveData = parksViewModel.favoriteParksLiveData, modifier = Modifier.padding(innerPadding), onParkClick
+//        )
     }
 }
 
@@ -75,6 +80,19 @@ fun BodyContent(
         }
     }
 }
+
+@Composable
+fun BodyContent1(
+    parksLiveData: LiveData<List<ParkEntity>>, modifier: Modifier = Modifier, onParkClick: (Park) -> Unit
+) {
+    val parks = parksLiveData.value ?: emptyList()
+    LazyColumn(modifier = modifier) {
+        items(parks.size) { index ->
+            StandardText(text = parks[index].name)
+        }
+    }
+}
+
 
 @Composable
 fun BottomNavigationBar() {
