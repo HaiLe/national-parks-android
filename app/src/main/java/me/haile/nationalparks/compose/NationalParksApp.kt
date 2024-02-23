@@ -17,8 +17,23 @@
 package me.haile.nationalparks.compose
 
 import android.app.Activity
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -36,62 +51,98 @@ fun NationalParksApp() {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NationalParksNavHost(
     navController: NavHostController
 ) {
-    val activity = (LocalContext.current as Activity)
-    NavHost(navController = navController, startDestination = Screen.Home.route) {
-        composable(route = Screen.Home.route) {
-            HomeScreen(
-                onParkClick = {
-                    navController.navigate(
-                        Screen.Park.createRoute(
-                            parkId = it.parkCode,
-                            parkTitle = it.fullName,
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("National Parks") },
+                actions = {
+                    IconButton(onClick = { /* Handle action */ }) {
+                        Icon(Icons.Filled.Favorite, contentDescription = "Favorite")
+                    }
+                }
+            )
+        },
+        bottomBar = {
+            BottomAppBar {
+                IconButton(
+                    onClick = { /* Handle navigation icon click */ }
+                ) {
+                    Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
+                }
+
+                IconButton(
+                    onClick = { /* Handle navigation icon click */ }
+                ) {
+                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
+                }
+
+                IconButton(
+                    onClick = { /* Handle navigation icon click */ }
+                ) {
+                    Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Profile")
+                }
+                // Add more BottomNavigationItem as needed
+            }
+        }
+    ) { innerPadding ->
+        val activity = (LocalContext.current as Activity)
+        NavHost(navController = navController, startDestination = Screen.Home.route, modifier = Modifier.padding(innerPadding)) {
+            composable(route = Screen.Home.route) {
+                HomeScreen(
+                    onParkClick = {
+                        navController.navigate(
+                            Screen.Park.createRoute(
+                                parkId = it.parkCode,
+                                parkTitle = it.fullName,
+                            )
                         )
-                    )
-                }
-            )
-        }
+                    }
+                )
+            }
 
-        composable(
-            route = Screen.Park.route,
-            arguments = Screen.Park.navArguments
-        ) {
-            ParkScreen(
-                onBackClick = { navController.navigateUp() },
-                onFabClick = {
-                    navController.navigateUp()
-                }, onGoToGalleryClick = {
-                    navController.navigate(
-                        Screen.Gallery.createRoute(it)
-                    )
-                },
-                onGoToThingsToDoClick = {
-                    navController.navigate(
-                        Screen.ThingsToDo.createRoute(it)
-                    )
-                }
-            )
-        }
+            composable(
+                route = Screen.Park.route,
+                arguments = Screen.Park.navArguments
+            ) {
+                ParkScreen(
+                    onBackClick = { navController.navigateUp() },
+                    onFabClick = {
+                        navController.navigateUp()
+                    }, onGoToGalleryClick = {
+                        navController.navigate(
+                            Screen.Gallery.createRoute(it)
+                        )
+                    },
+                    onGoToThingsToDoClick = {
+                        navController.navigate(
+                            Screen.ThingsToDo.createRoute(it)
+                        )
+                    }
+                )
+            }
 
-        composable(
-            route = Screen.ThingsToDo.route,
-            arguments = Screen.ThingsToDo.navArguments
-        ) {
-            ThingsTodoScreen(
+            composable(
+                route = Screen.ThingsToDo.route,
+                arguments = Screen.ThingsToDo.navArguments
+            ) {
+                ThingsTodoScreen(
 //                onBackClick = { navController.navigateUp() },
 //                onFabClick = {
 //                    navController.navigateUp()
 //                }
-            )
-        }
-        composable(
-            route = Screen.Gallery.route,
-            arguments = Screen.Gallery.navArguments
-        ) {
-            GalleryScreen()
+                )
+            }
+            composable(
+                route = Screen.Gallery.route,
+                arguments = Screen.Gallery.navArguments
+            ) {
+                GalleryScreen()
 //                onPhotoClick = {
 //                    val uri = Uri.parse(it.user.attributionUrl)
 //                    val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -100,6 +151,7 @@ fun NationalParksNavHost(
 //                onUpClick = {
 //                    navController.navigateUp()
 //                })
+            }
         }
     }
 }

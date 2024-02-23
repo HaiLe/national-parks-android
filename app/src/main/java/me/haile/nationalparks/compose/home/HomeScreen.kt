@@ -6,11 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -37,16 +33,14 @@ import me.haile.nationalparks.viewmodel.HomeViewModel
 fun HomeScreen(
     parksViewModel: HomeViewModel = hiltViewModel(), onParkClick: (Park) -> Unit = {}
 ) {
-    Scaffold(topBar = { TopAppBar(title = { Text("Home") }) },
-        bottomBar = { BottomNavigationBar() }) { innerPadding ->
-        BodyContent(
-            parks = parksViewModel.parksData, modifier = Modifier.padding(innerPadding), onParkClick, parksViewModel
-        )
-//        BodyContent1(
-//            parksLiveData = parksViewModel.favoriteParksLiveData, modifier = Modifier.padding(innerPadding), onParkClick
-//        )
-    }
+    BodyContent(
+        parks = parksViewModel.parksData,
+        modifier = Modifier.padding(16.dp),
+        onParkClick,
+        parksViewModel
+    )
 }
+
 
 @Composable
 fun ListItem(
@@ -71,7 +65,10 @@ fun ListItem(
 
 @Composable
 fun BodyContent(
-    parks: Flow<PagingData<Park>>, modifier: Modifier = Modifier, onParkClick: (Park) -> Unit, parksViewModel: HomeViewModel
+    parks: Flow<PagingData<Park>>,
+    modifier: Modifier = Modifier,
+    onParkClick: (Park) -> Unit,
+    parksViewModel: HomeViewModel
 ) {
     val pagingItems: LazyPagingItems<Park> = parks.collectAsLazyPagingItems()
     LazyColumn(modifier = modifier) {
@@ -95,22 +92,6 @@ fun BodyContent1(
             StandardText(text = parks[index].name)
         }
     }
-}
-
-
-@Composable
-fun BottomNavigationBar() {
-//    BottomAppBar {
-//            BottomNavigation {
-//                BottomNavigationItem(
-//                    selected = true, // You can control the selected state as needed
-//                    onClick = {}, // Add your logic for what happens when the item is clicked
-//                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-//                    label = { Text("Home") }
-//                )
-//                // Add more BottomNavigationItem here as needed
-//            }
-//    }
 }
 
 @Preview(showBackground = true)
