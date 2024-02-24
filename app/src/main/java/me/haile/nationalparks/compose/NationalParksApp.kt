@@ -17,7 +17,9 @@
 package me.haile.nationalparks.compose
 
 import android.app.Activity
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Favorite
@@ -25,19 +27,28 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.launch
+import me.haile.nationalparks.compose.favorites.FavoritesScreen
 import me.haile.nationalparks.compose.gallery.GalleryScreen
 import me.haile.nationalparks.compose.home.HomeScreen
 import me.haile.nationalparks.compose.park.ParkScreen
@@ -57,79 +68,86 @@ fun NationalParksNavHost(
     navController: NavHostController
 ) {
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("National Parks") },
-                actions = {
-                    IconButton(onClick = { /* Handle action */ }) {
-                        Icon(Icons.Filled.Favorite, contentDescription = "Favorite")
-                    }
-                }
-            )
-        },
-        bottomBar = {
-            BottomAppBar {
-                IconButton(
-                    onClick = { /* Handle navigation icon click */ }
-                ) {
-                    Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
-                }
-
-                IconButton(
-                    onClick = { /* Handle navigation icon click */ }
-                ) {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
-                }
-
-                IconButton(
-                    onClick = { /* Handle navigation icon click */ }
-                ) {
-                    Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Profile")
-                }
-                // Add more BottomNavigationItem as needed
+    Scaffold(topBar = {
+        TopAppBar(title = { Text("National Parks") }, actions = {
+            IconButton(onClick = { /* Handle action */ }) {
+                Icon(Icons.Filled.Favorite, contentDescription = "Favorite")
             }
+        })
+    }, bottomBar = {
+        BottomAppBar {
+            IconButton(
+                onClick = { /* Handle navigation icon click */
+                    if (navController.currentBackStackEntry?.destination?.route != Screen.Home.route)
+                        navController.navigate(Screen.Home.route) {
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    navController.navigate(Screen.Home.route) {
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }) {
+                Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
+            }
+
+            IconButton(onClick = { /* Handle navigation icon click */
+                if (navController.currentBackStackEntry?.destination?.route != Screen.Favorites.route)
+                    navController.navigate(Screen.Favorites.route) {
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+            }) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
+            }
+
+            IconButton(onClick = { /* Handle navigation icon click */
+                if (navController.currentBackStackEntry?.destination?.route != Screen.Favorites.route)
+                    navController.navigate(Screen.Favorites.route) {
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+            }) {
+                Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Profile")
+            }
+            // Add more BottomNavigationItem as needed
         }
-    ) { innerPadding ->
+    }) { innerPadding ->
         val activity = (LocalContext.current as Activity)
-        NavHost(navController = navController, startDestination = Screen.Home.route, modifier = Modifier.padding(innerPadding)) {
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Home.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
             composable(route = Screen.Home.route) {
-                HomeScreen(
-                    onParkClick = {
-                        navController.navigate(
-                            Screen.Park.createRoute(
-                                parkId = it.parkCode,
-                                parkTitle = it.fullName,
-                            )
+                HomeScreen(onParkClick = {
+                    navController.navigate(
+                        Screen.Park.createRoute(
+                            parkId = it.parkCode,
+                            parkTitle = it.fullName,
                         )
-                    }
-                )
+                    )
+                })
             }
 
             composable(
-                route = Screen.Park.route,
-                arguments = Screen.Park.navArguments
+                route = Screen.Park.route, arguments = Screen.Park.navArguments
             ) {
-                ParkScreen(
-                    onBackClick = { navController.navigateUp() },
-                    onFabClick = {
-                        navController.navigateUp()
-                    }, onGoToGalleryClick = {
-                        navController.navigate(
-                            Screen.Gallery.createRoute(it)
-                        )
-                    },
-                    onGoToThingsToDoClick = {
-                        navController.navigate(
-                            Screen.ThingsToDo.createRoute(it)
-                        )
-                    }
-                )
+                ParkScreen(onBackClick = { navController.navigateUp() }, onFabClick = {
+                    navController.navigateUp()
+                }, onGoToGalleryClick = {
+                    navController.navigate(
+                        Screen.Gallery.createRoute(it)
+                    )
+                }, onGoToThingsToDoClick = {
+                    navController.navigate(
+                        Screen.ThingsToDo.createRoute(it)
+                    )
+                })
             }
 
             composable(
-                route = Screen.ThingsToDo.route,
-                arguments = Screen.ThingsToDo.navArguments
+                route = Screen.ThingsToDo.route, arguments = Screen.ThingsToDo.navArguments
             ) {
                 ThingsTodoScreen(
 //                onBackClick = { navController.navigateUp() },
@@ -139,8 +157,7 @@ fun NationalParksNavHost(
                 )
             }
             composable(
-                route = Screen.Gallery.route,
-                arguments = Screen.Gallery.navArguments
+                route = Screen.Gallery.route, arguments = Screen.Gallery.navArguments
             ) {
                 GalleryScreen()
 //                onPhotoClick = {
@@ -152,9 +169,51 @@ fun NationalParksNavHost(
 //                    navController.navigateUp()
 //                })
             }
+            composable(
+                route = Screen.Favorites.route, arguments = listOf()
+            ) {
+                FavoritesScreen(
+//                onBackClick = { navController.navigateUp() },
+//                onFabClick = {
+//                    navController.navigateUp()
+//                }
+                )
+            }
         }
     }
 }
+
+fun handleClick() {
+    // Handle click
+
+
+}
+
+@Composable
+fun SnackBar(text: String) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }, floatingActionButton = {
+        var clickCount by remember { mutableStateOf(0) }
+        ExtendedFloatingActionButton(onClick = {
+            // show snackbar as a suspend function
+            scope.launch {
+                snackbarHostState.showSnackbar(
+                    "Snackbar # ${++clickCount}"
+                )
+            }
+        }) { Text("Show snackbar") }
+    }, content = { innerPadding ->
+        Text(
+            text = "Body content",
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .wrapContentSize()
+        )
+    })
+}
+
 
 // Helper function for calling a share functionality.
 // Should be used when user presses a share button/menu item.

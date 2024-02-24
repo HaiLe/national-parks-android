@@ -26,16 +26,15 @@ sealed class Screen(
     data object Home : Screen("home")
 
     data object Park : Screen(
-        route = "park/{parkId}/{parkTitle}",
-        navArguments = listOf(navArgument("parkId") {
+        route = "park/{parkId}/{parkTitle}", navArguments = listOf(navArgument("parkId") {
             type = NavType.StringType
         }, navArgument("parkTitle") {
             type = NavType.StringType
         })
     ) {
-        fun createRoute(parkId: String, parkTitle: String) =
-            "park/${parkId}/${parkTitle}"
+        fun createRoute(parkId: String, parkTitle: String) = "park/${parkId}/${parkTitle}"
     }
+
     data object Article : Screen(
         route = "article/{articleId}/{articleTitle}",
         navArguments = listOf(navArgument("articleId") {
@@ -56,7 +55,13 @@ sealed class Screen(
         fun createRoute(plantName: String) = "gallery/${plantName}"
     }
 
-    data object  ThingsToDo : Screen(
+    data object Favorites : Screen(
+        route = "favorites", navArguments = listOf()
+    ) {
+        fun createRoute() = "favorites"
+    }
+
+    data object ThingsToDo : Screen(
         route = "thingstodo/{parkCode}", navArguments = listOf(navArgument("parkCode") {
             type = NavType.StringType
         })

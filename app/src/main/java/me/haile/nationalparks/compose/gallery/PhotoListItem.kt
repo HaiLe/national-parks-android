@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.haile.memor.compose.plantlist
+package me.haile.nationalparks.compose.gallery
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,10 +37,6 @@ import me.haile.nationalparks.R
 import me.haile.nationalparks.data.UnsplashPhoto
 import me.haile.nationalparks.utils.SunflowerImage
 
-//@Composable
-//fun PlantListItem(plant: Plant, onClick: () -> Unit) {
-//    ImageListItem(name = plant.name, imageUrl = plant.imageUrl, onClick = onClick)
-//}
 
 @Composable
 fun PhotoListItem(photo: UnsplashPhoto, onClick: () -> Unit) {

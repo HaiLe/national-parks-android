@@ -22,7 +22,6 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
-import me.haile.memor.compose.plantlist.PhotoListItem
 import me.haile.nationalparks.R
 import me.haile.nationalparks.data.UnsplashPhoto
 import me.haile.nationalparks.viewmodel.GalleryViewModel
