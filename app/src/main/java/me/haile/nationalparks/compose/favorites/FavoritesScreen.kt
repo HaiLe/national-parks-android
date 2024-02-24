@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,26 +26,30 @@ import me.haile.nationalparks.data.Park
 import me.haile.nationalparks.data.db.ParkEntity
 import me.haile.nationalparks.ui.NationalParksTheme
 import me.haile.nationalparks.utils.CommonUtils
+import me.haile.nationalparks.viewmodel.FavoritesViewModel
 import me.haile.nationalparks.viewmodel.HomeViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoritesScreen(
-    parksViewModel: HomeViewModel = hiltViewModel(), onParkClick: (Park) -> Unit = {}
+    favoritesViewModel: FavoritesViewModel = hiltViewModel(), onParkClick: (ParkEntity) -> Unit = {}
 ) {
-    BodyContent(
-        parks = parksViewModel.parksData,
-        modifier = Modifier.padding(16.dp),
-        onParkClick,
-        parksViewModel
-    )
+    favoritesViewModel.getFavoriteParks()
+    favoritesViewModel.favoriteParksLiveData.observeAsState().value?.let {
+        BodyContent(
+            parks = it,
+            modifier = Modifier.padding(16.dp),
+            onParkClick,
+            favoritesViewModel
+        )
+    }
 }
 
 
 @Composable
 fun ListItem(
-    park: Park, onParkClick: (Park) -> Unit, parksViewModel: HomeViewModel
+    park: ParkEntity, onParkClick: (ParkEntity) -> Unit, parksViewModel: FavoritesViewModel
 ) {
     LocalContext.current
     Column(modifier = Modifier
@@ -52,7 +57,7 @@ fun ListItem(
         .padding(16.dp)
         .clickable {
             // add to favorites
-            parksViewModel.addParkToFavoriteList(park)
+            // parksViewModel.addParkToFavoriteList(park)
             onParkClick(park)
         }) {
         HeaderText(text = park.name)
@@ -65,20 +70,19 @@ fun ListItem(
 
 @Composable
 fun BodyContent(
-    parks: Flow<PagingData<Park>>,
+    parks: List<ParkEntity>,
     modifier: Modifier = Modifier,
-    onParkClick: (Park) -> Unit,
-    parksViewModel: HomeViewModel
+    onParkClick: (ParkEntity) -> Unit,
+    favoritesViewModel: FavoritesViewModel
 ) {
-//    val pagingItems: LazyPagingItems<Park> = parks.collectAsLazyPagingItems()
-//    LazyColumn(modifier = modifier) {
-//        items(pagingItems.itemCount) { index ->
-//            ListItem(
-//                park = pagingItems[index] ?: return@items, onParkClick = onParkClick, parksViewModel
-//            )
-//        }
-//    }
-    HeaderText(text = "Favorites")
+    LazyColumn(modifier = modifier) {
+        items(parks.size) { index ->
+            ListItem(
+                park = parks[index] ?: return@items, onParkClick = onParkClick, favoritesViewModel
+            )
+        }
+    }
+    //HeaderText(text = "Favorites")
 }
 
 @Composable

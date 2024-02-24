@@ -13,23 +13,9 @@ import me.haile.nationalparks.data.db.ParkEntity
 import me.haile.nationalparks.data.nps.ParksPagingSource
 import javax.inject.Inject
 
-class HomeRepository @Inject constructor(
-    private val service: NPSService,
+class FavoriteRepository @Inject constructor(
     private val parkDao: ParkDao
 ) {
-    fun getParksStream(): Flow<PagingData<Park>> {
-        return Pager(
-            config = PagingConfig(
-                enablePlaceholders = false,
-                pageSize = NETWORK_PAGE_SIZE,
-                initialLoadSize = NETWORK_PAGE_SIZE,
-                prefetchDistance = 10,       // Load next page when 10 items are left to be scrolled
-                maxSize = 500
-            ),
-            pagingSourceFactory = { ParksPagingSource(service) }
-        ).flow
-    }
-
     suspend fun getFavoriteParks(): List<ParkEntity> {
         return parkDao.getFavoriteParks()
     }
@@ -49,6 +35,23 @@ class HomeRepository @Inject constructor(
             latLong = park.latLong,
         )
         parkDao.insertPark(parkToInsert)
+    }
+
+    suspend fun removeParkFromFavorites(park: Park) {
+        val parkToRemove = ParkEntity(
+            id = park.parkCode,
+            fullName = park.fullName,
+            states = park.states,
+            designation = park.designation,
+            latitude = park.latitude,
+            longitude = park.longitude,
+            url = park.url,
+            name = park.name,
+            parkCode = park.parkCode,
+            description = park.description,
+            latLong = park.latLong,
+        )
+        parkDao.deletePark(parkToRemove)
     }
 
     companion object {

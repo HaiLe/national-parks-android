@@ -4,19 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.LOG_TAG
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import me.haile.nationalparks.data.Park
 import me.haile.nationalparks.data.db.ParkEntity
+import me.haile.nationalparks.repositories.FavoriteRepository
 import me.haile.nationalparks.repositories.HomeRepository
+import me.haile.nationalparks.utils.Logging
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val homeRepository: HomeRepository,
+class FavoritesViewModel @Inject constructor(
+    private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
-    val parksData = homeRepository.getParksStream().cachedIn(viewModelScope)
 
     private val _favoriteParksLiveData = MutableLiveData<List<ParkEntity>>()
     val favoriteParksLiveData: LiveData<List<ParkEntity>> = _favoriteParksLiveData
@@ -25,14 +27,18 @@ class HomeViewModel @Inject constructor(
     val showSnackbar: LiveData<Boolean>
         get() = _showSnackbar
 
-    suspend fun getFavoriteParks() {
-        _favoriteParksLiveData.value = homeRepository.getFavoriteParks()
+    fun getFavoriteParks() {
+        viewModelScope.launch {
+            val listOfFavoritesPark = favoriteRepository.getFavoriteParks()
+            Logging.log("getFavoriteParks: $listOfFavoritesPark")
+            _favoriteParksLiveData.value = listOfFavoritesPark
+        }
     }
 
     // add park to favorites
     fun addParkToFavoriteList(park: Park) {
         viewModelScope.launch {
-            homeRepository.addParkToFavorites(park = park)
+            favoriteRepository.addParkToFavorites(park = park)
             _showSnackbar.value = true
         }
     }

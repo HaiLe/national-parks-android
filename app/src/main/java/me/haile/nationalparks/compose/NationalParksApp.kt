@@ -67,7 +67,6 @@ fun NationalParksApp() {
 fun NationalParksNavHost(
     navController: NavHostController
 ) {
-
     Scaffold(topBar = {
         TopAppBar(title = { Text("National Parks") }, actions = {
             IconButton(onClick = { /* Handle action */ }) {
@@ -113,7 +112,6 @@ fun NationalParksNavHost(
             // Add more BottomNavigationItem as needed
         }
     }) { innerPadding ->
-        val activity = (LocalContext.current as Activity)
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
@@ -199,7 +197,7 @@ fun SnackBar(text: String) {
             // show snackbar as a suspend function
             scope.launch {
                 snackbarHostState.showSnackbar(
-                    "Snackbar # ${++clickCount}"
+                    "Snackbar -- $text -- # ${++clickCount}"
                 )
             }
         }) { Text("Show snackbar") }
