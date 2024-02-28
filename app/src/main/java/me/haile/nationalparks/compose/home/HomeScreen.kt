@@ -35,7 +35,7 @@ fun HomeScreen(
 ) {
     BodyContent(
         parks = parksViewModel.parksData,
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.padding(0.dp),
         onParkClick,
         parksViewModel
     )

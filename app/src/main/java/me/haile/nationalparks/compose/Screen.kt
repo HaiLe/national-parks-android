@@ -21,16 +21,18 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
 sealed class Screen(
-    val route: String, val navArguments: List<NamedNavArgument> = emptyList()
+    val route: String,
+    val navArguments: List<NamedNavArgument> = emptyList(),
+    val title: String = "National Parks"
 ) {
-    data object Home : Screen("home")
+    data object Home : Screen("home", title = "Home")
 
     data object Park : Screen(
         route = "park/{parkId}/{parkTitle}", navArguments = listOf(navArgument("parkId") {
             type = NavType.StringType
         }, navArgument("parkTitle") {
             type = NavType.StringType
-        })
+        }), title = "Park"
     ) {
         fun createRoute(parkId: String, parkTitle: String) = "park/${parkId}/${parkTitle}"
     }
@@ -50,13 +52,13 @@ sealed class Screen(
     data object Gallery : Screen(
         route = "gallery/{query}", navArguments = listOf(navArgument("query") {
             type = NavType.StringType
-        })
+        }), title = "Gallery"
     ) {
         fun createRoute(plantName: String) = "gallery/${plantName}"
     }
 
     data object Favorites : Screen(
-        route = "favorites", navArguments = listOf()
+        route = "favorites", navArguments = listOf(), title = "Favorites"
     ) {
         fun createRoute() = "favorites"
     }

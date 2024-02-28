@@ -19,6 +19,5 @@ interface ParkDao {
 
     @Query("SELECT * FROM favorite_parks ORDER BY fullName ASC")
     suspend fun getFavoriteParks(): List<ParkEntity>
-
     // Add more queries as needed
 }

@@ -16,7 +16,6 @@
 
 package me.haile.nationalparks.compose
 
-import android.app.Activity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -36,13 +35,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -58,14 +57,16 @@ import me.haile.nationalparks.compose.thingstodo.ThingsTodoScreen
 fun NationalParksApp() {
     val navController = rememberNavController()
     NationalParksNavHost(
-        navController = navController
+        navController = navController,
+        titleState = remember { mutableStateOf("National Parks") }
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NationalParksNavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    titleState: MutableState<String>
 ) {
     Scaffold(topBar = {
         TopAppBar(title = { Text("National Parks") }, actions = {
@@ -77,6 +78,7 @@ fun NationalParksNavHost(
         BottomAppBar {
             IconButton(
                 onClick = { /* Handle navigation icon click */
+                    titleState.value = Screen.Home.title
                     if (navController.currentBackStackEntry?.destination?.route != Screen.Home.route)
                         navController.navigate(Screen.Home.route) {
                             launchSingleTop = true
@@ -91,6 +93,7 @@ fun NationalParksNavHost(
             }
 
             IconButton(onClick = { /* Handle navigation icon click */
+                titleState.value = Screen.Favorites.title
                 if (navController.currentBackStackEntry?.destination?.route != Screen.Favorites.route)
                     navController.navigate(Screen.Favorites.route) {
                         launchSingleTop = true
@@ -101,6 +104,7 @@ fun NationalParksNavHost(
             }
 
             IconButton(onClick = { /* Handle navigation icon click */
+                titleState.value = Screen.Favorites.title
                 if (navController.currentBackStackEntry?.destination?.route != Screen.Favorites.route)
                     navController.navigate(Screen.Favorites.route) {
                         launchSingleTop = true
