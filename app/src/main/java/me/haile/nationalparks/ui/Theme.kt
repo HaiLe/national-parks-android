@@ -18,6 +18,7 @@ package me.haile.nationalparks.ui
 
 import android.app.Activity
 import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -97,6 +98,7 @@ private val DarkColors = darkColorScheme(
     scrim = md_theme_dark_scrim,
 )
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun NationalParksTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

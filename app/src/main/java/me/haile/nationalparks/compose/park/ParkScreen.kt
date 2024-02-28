@@ -24,6 +24,7 @@ import me.haile.nationalparks.compose.common.StandardText
 import me.haile.nationalparks.data.Activity
 import me.haile.nationalparks.data.Park
 import me.haile.nationalparks.data.Topic
+import me.haile.nationalparks.utils.CommonUtils
 import me.haile.nationalparks.viewmodel.ParkViewModel
 
 data class ParkScreenCallbacks(
@@ -48,6 +49,8 @@ fun DisplayParkDetails(park: Park) {
     Separator()
     StandardText(text = park.url)
     Separator()
+    HeaderText(text = "Hours")
+    StandardText(text = CommonUtils.displayOperationHours(park.operatingHours))
     HeaderText(text = "About")
     StandardText(text = park.description)
     Separator()
