@@ -69,7 +69,7 @@ fun NationalParksNavHost(
     titleState: MutableState<String>
 ) {
     Scaffold(topBar = {
-        TopAppBar(title = { Text("National Parks") }, actions = {
+        TopAppBar(title = { Text(titleState.value) }, actions = {
             IconButton(onClick = { /* Handle action */ }) {
                 Icon(Icons.Filled.Favorite, contentDescription = "Favorite")
             }
