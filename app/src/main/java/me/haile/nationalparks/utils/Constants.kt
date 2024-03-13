@@ -7,6 +7,8 @@ object Constants {
     val NPS_QUERY_PARAMETER = "National Parks"
     val NPS_LIST_OF_NATIONAL_PARKS_CODE = "acad,npsa,arch,badl,bibe,bisc,blca,brca,cany,care,cave,chis,cong,crla,cuva,deva,dena,drto,ever,gaar,jeff,glac,glba,grca,grte,grba,grsa,grsm,gumo,hale,havo,hosp,indu,isro,jotr,katm,kefj,seki,kova,lacl,lavo,maca,meve,mora,neri,noca,olym,pefo,pinn,redw,romo,sagu,shen,thro,vicr,voya,whsa,wica,wrst,yell,yose,zion"
 
+    val OPENAI_API_KEY = "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"
+
     // list of state appreviation to full state name mapping
     val usStateAbbrev = mapOf(
         "AL" to "Alabama",

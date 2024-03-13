@@ -28,7 +28,6 @@ class ParkViewModel @Inject constructor(
 
     fun fetchPark() {
         _uiState.value = UiState.Loading // Set the UI state to loading before the request starts
-
         viewModelScope.launch(IO) {
             try {
                 val response = npsService.park(parkCode ?: "")

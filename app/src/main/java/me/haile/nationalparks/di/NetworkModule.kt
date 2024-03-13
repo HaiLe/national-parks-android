@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.haile.nationalparks.api.NPSService
+import me.haile.nationalparks.api.OpenAIService
 import me.haile.nationalparks.api.UnsplashService
 import javax.inject.Singleton
 
@@ -21,5 +22,11 @@ class NetworkModule {
     @Provides
     fun provideNPSService(): NPSService {
         return NPSService.create()
+    }
+
+    @Singleton
+    @Provides
+    fun provideOpenAPIService(): OpenAIService {
+        return OpenAIService.create()
     }
 }
