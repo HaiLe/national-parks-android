@@ -51,6 +51,7 @@ import me.haile.nationalparks.compose.favorites.FavoritesScreen
 import me.haile.nationalparks.compose.gallery.GalleryScreen
 import me.haile.nationalparks.compose.home.HomeScreen
 import me.haile.nationalparks.compose.park.ParkScreen
+import me.haile.nationalparks.compose.plan.PlanScreen
 import me.haile.nationalparks.compose.thingstodo.ThingsTodoScreen
 
 @Composable
@@ -145,6 +146,10 @@ fun NationalParksNavHost(
                     navController.navigate(
                         Screen.ThingsToDo.createRoute(it)
                     )
+                }, onPlanPhotographyTripClick = {
+                    navController.navigate(
+                        Screen.Plan.createRoute(it)
+                    )
                 })
             }
 
@@ -171,6 +176,21 @@ fun NationalParksNavHost(
 //                    navController.navigateUp()
 //                })
             }
+
+            composable(
+                route = Screen.Plan.route, arguments = Screen.Plan.navArguments
+            ) {
+                PlanScreen()
+//                onPhotoClick = {
+//                    val uri = Uri.parse(it.user.attributionUrl)
+//                    val intent = Intent(Intent.ACTION_VIEW, uri)
+//                    activity.startActivity(intent)
+//                },
+//                onUpClick = {
+//                    navController.navigateUp()
+//                })
+            }
+
             composable(
                 route = Screen.Favorites.route, arguments = listOf()
             ) {

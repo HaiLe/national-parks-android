@@ -87,7 +87,8 @@ fun ParkScreen(
     onFabClick: () -> Unit,
     onBackClick: () -> Unit,
     onGoToGalleryClick: (galleryQuery: String) -> Unit,
-    onGoToThingsToDoClick: (parkCode: String) -> Unit
+    onGoToThingsToDoClick: (parkCode: String) -> Unit,
+    onPlanPhotographyTripClick: (parkCode: String) -> Unit
 ) {
     viewModel.fetchPark()
     val park = viewModel.park.observeAsState()
@@ -111,6 +112,11 @@ fun ParkScreen(
             Separator()
             Button(onClick = { onGoToThingsToDoClick(it.parkCode) }) {
                 Text(text = "Go to Things To Do screen")
+            }
+
+            Separator()
+            Button(onClick = { onPlanPhotographyTripClick(it.parkCode) }) {
+                Text(text = "Plan Photography Trip")
             }
         }
 

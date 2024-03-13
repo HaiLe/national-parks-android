@@ -57,6 +57,14 @@ sealed class Screen(
         fun createRoute(plantName: String) = "gallery/${plantName}"
     }
 
+    data object Plan : Screen(
+        route = "plan/{query}", navArguments = listOf(navArgument("query") {
+            type = NavType.StringType
+        }), title = "Plan a trip"
+    ) {
+        fun createRoute(plantName: String) = "plan/${plantName}"
+    }
+
     data object Favorites : Screen(
         route = "favorites", navArguments = listOf(), title = "Favorites"
     ) {
@@ -69,5 +77,13 @@ sealed class Screen(
         })
     ) {
         fun createRoute(parkCode: String) = "thingstodo/${parkCode}"
+    }
+
+    data object PlanPhotographyTrip : Screen(
+        route = "plan/{query}", navArguments = listOf(navArgument("query") {
+            type = NavType.StringType
+        }), title = "Photography Trip"
+    ) {
+        fun createRoute(plantName: String) = "gallery/${plantName}"
     }
 }
