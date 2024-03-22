@@ -21,6 +21,10 @@ android {
         versionCode 1
         versionName "1.0"
 
+        //buildConfigField("String", "OPENAI_API_KEY", "\"${System.getenv("openai_api_key")}\"")
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        buildConfigField "String", "OPENAI_API_KEY", "\"${properties.getProperty('api.openai_api_key')}\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -49,12 +53,12 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField("String", "OPENAI_API_KEY", openai_api_key)
+            //buildConfigField("String", "OPENAI_API_KEY", openai_api_key)
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "OPENAI_API_KEY", openai_api_key)
+            //buildConfigField("String", "OPENAI_API_KEY", openai_api_key)
         }
     }
 }
