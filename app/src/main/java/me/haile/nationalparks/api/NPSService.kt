@@ -1,10 +1,10 @@
 package me.haile.nationalparks.api
 
+import me.haile.nationalparks.BuildConfig
 import me.haile.nationalparks.data.AudiosResponse
 import me.haile.nationalparks.data.GalleriesResponse
 import me.haile.nationalparks.data.ParksResponse
 import me.haile.nationalparks.data.VideosResponse
-import me.haile.nationalparks.utils.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,26 +17,26 @@ interface NPSService {
     suspend fun parks(
         @Query("start") start: Int,
         @Query("limit") limit: Int,
-        @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY,
+        @Query("api_key") clientId: String = BuildConfig.NPS_API_KEY,
     ): ParksResponse
 
     @GET("parks")
     suspend fun park(
         @Query("parkCode") parkCode: String,
-        @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY
+        @Query("api_key") clientId: String = BuildConfig.NPS_API_KEY
     ): ParksResponse
 
     @GET("multimedia/galleries")
     suspend fun galleries(
         @Query("parkCode") parkCode: String,
-        @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY,
+        @Query("api_key") clientId: String = BuildConfig.NPS_API_KEY,
         @Query("limit") limit: Int = 100,
     ): GalleriesResponse
 
     @GET("multimedia/galleries/assets")
     suspend fun assets(
         @Query("parkCode") parkCode: String,
-        @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY,
+        @Query("api_key") clientId: String = BuildConfig.NPS_API_KEY,
         @Query("id") id: String,
         @Query("limit") limit: Int = 100,
     ): GalleriesResponse
@@ -44,14 +44,14 @@ interface NPSService {
     @GET("multimedia/videos")
     suspend fun videos(
         @Query("parkCode") parkCode: String,
-        @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY,
+        @Query("api_key") clientId: String = BuildConfig.NPS_API_KEY,
         @Query("limit") limit: Int = 100,
     ): VideosResponse
 
     @GET("multimedia/audios")
     suspend fun audios(
         @Query("parkCode") parkCode: String,
-        @Query("api_key") clientId: String = Constants.NPS_SERVICE_API_KEY,
+        @Query("api_key") clientId: String = BuildConfig.NPS_API_KEY,
         @Query("limit") limit: Int = 100,
     ): AudiosResponse
 

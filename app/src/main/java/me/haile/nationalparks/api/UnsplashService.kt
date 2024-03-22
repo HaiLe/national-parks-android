@@ -1,5 +1,6 @@
 package me.haile.nationalparks.api
 
+import me.haile.nationalparks.BuildConfig
 import me.haile.nationalparks.data.UnsplashSearchResponse
 import me.haile.nationalparks.utils.Constants
 import okhttp3.OkHttpClient
@@ -15,7 +16,7 @@ interface UnsplashService {
         @Query("query") query: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
-        @Query("client_id") clientId: String = Constants.UNSPLASH_ACCESS_KEY
+        @Query("client_id") clientId: String = BuildConfig.UNSPLASH_API_KEY
     ): UnsplashSearchResponse
 
     companion object {

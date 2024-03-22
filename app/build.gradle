@@ -25,6 +25,8 @@ android {
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
         buildConfigField "String", "OPENAI_API_KEY", "\"${properties.getProperty('api.openai_api_key')}\""
+        buildConfigField "String", "NPS_API_KEY", "\"${properties.getProperty('api.nps')}\""
+        buildConfigField "String", "UNSPLASH_API_KEY", "\"${properties.getProperty('api.unsplash')}\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
