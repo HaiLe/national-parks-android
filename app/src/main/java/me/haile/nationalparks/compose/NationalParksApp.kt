@@ -16,6 +16,7 @@
 
 package me.haile.nationalparks.compose
 
+import LegoScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -71,8 +72,19 @@ fun NationalParksNavHost(
 ) {
     Scaffold(topBar = {
         TopAppBar(title = { Text(titleState.value) }, actions = {
-            IconButton(onClick = { /* Handle action */ }) {
-                Icon(Icons.Filled.Favorite, contentDescription = "Favorite")
+            IconButton(onClick = {
+                titleState.value = Screen.Home.title
+                if (navController.currentBackStackEntry?.destination?.route != Screen.Lego.route)
+                    navController.navigate(Screen.Lego.route) {
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+//                navController.navigate(Screen.Home.route) {
+//                    launchSingleTop = true
+//                    restoreState = true
+//                }
+            }) {
+                Icon(Icons.Filled.Favorite, contentDescription = "Lego")
             }
         })
     }, bottomBar = {
@@ -85,10 +97,10 @@ fun NationalParksNavHost(
                             launchSingleTop = true
                             restoreState = true
                         }
-                    navController.navigate(Screen.Home.route) {
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+//                    navController.navigate(Screen.Home.route) {
+//                        launchSingleTop = true
+//                        restoreState = true
+//                    }
                 }) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Home")
             }
@@ -200,6 +212,10 @@ fun NationalParksNavHost(
 //                    navController.navigateUp()
 //                }
                 )
+            }
+
+            composable(route = Screen.Lego.route) {
+                LegoScreen()
             }
         }
     }
