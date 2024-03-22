@@ -11,6 +11,7 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import java.util.concurrent.TimeUnit
 
 interface OpenAIService {
     @POST("v1/chat/completions")
@@ -28,6 +29,9 @@ interface OpenAIService {
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)
+                .connectTimeout(60, TimeUnit.SECONDS) // Connection timeout
+                .readTimeout(60, TimeUnit.SECONDS) // Read timeout
+                .writeTimeout(60, TimeUnit.SECONDS) // Write timeout
                 .build()
 
             return Retrofit.Builder()
