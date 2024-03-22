@@ -28,13 +28,13 @@ import me.haile.nationalparks.utils.Logging
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LegoScreen() {
+fun LegoScreen(onShowCardButtonClicked: () -> Unit) {
     Column (modifier = Modifier
         .padding(16.dp)
         .verticalScroll(rememberScrollState())) {
         HeaderText(text = "Buttons")
-        Button(onClick = { onButtonClicked() }) {
-            Text("Button")
+        Button(onClick = { onShowCardButtonClicked() }) {
+            Text("Show Card")
         }
 
         FilledTonalButton(onClick = { onButtonClicked() }) {
