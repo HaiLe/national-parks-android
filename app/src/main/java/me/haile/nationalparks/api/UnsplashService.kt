@@ -2,7 +2,6 @@ package me.haile.nationalparks.api
 
 import me.haile.nationalparks.BuildConfig
 import me.haile.nationalparks.data.UnsplashSearchResponse
-import me.haile.nationalparks.utils.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
