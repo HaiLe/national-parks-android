@@ -11,6 +11,7 @@ android {
 
     buildFeatures {
         compose true
+        buildConfig true
     }
 
     defaultConfig {
@@ -23,12 +24,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -39,6 +34,28 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.4"
+    }
+
+    // Add this block at the end of your build.gradle file
+    signingConfigs {
+        release {
+            storeFile file('your_keystore_file.jks')
+            storePassword 'your_keystore_password'
+            keyAlias 'your_key_alias'
+            keyPassword 'your_key_password'
+            storePassword 'your_keystore_password'
+            //buildConfigField("String", "OPENAI_API_KEY", openai_api_key)
+        }
+    }
+    buildTypes {
+        debug {
+            buildConfigField("String", "OPENAI_API_KEY", openai_api_key)
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "OPENAI_API_KEY", openai_api_key)
+        }
     }
 }
 
@@ -107,3 +124,4 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
 }
+
