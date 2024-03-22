@@ -1,6 +1,5 @@
 package me.haile.nationalparks.compose.plan
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -11,7 +10,6 @@ import me.haile.nationalparks.R
 import me.haile.nationalparks.compose.common.HeaderText
 import me.haile.nationalparks.compose.common.Separator
 import me.haile.nationalparks.compose.common.StandardText
-import me.haile.nationalparks.compose.home.ListItem
 import me.haile.nationalparks.data.openai.Choice
 import me.haile.nationalparks.viewmodel.PlanViewModel
 
@@ -19,7 +17,6 @@ import me.haile.nationalparks.viewmodel.PlanViewModel
 fun PlanScreen(planViewModel: PlanViewModel = hiltViewModel()) {
     planViewModel.fetchPhotographyTrip()
     val choice = planViewModel.choice.observeAsState()
-    //PlanScreenContent(choice = choice)
     choice.value?.let {
         LazyColumn {
             item {
@@ -32,7 +29,6 @@ fun PlanScreen(planViewModel: PlanViewModel = hiltViewModel()) {
                 StandardText(text = it.message.content)
             }
         }
-
     }
 }
 
