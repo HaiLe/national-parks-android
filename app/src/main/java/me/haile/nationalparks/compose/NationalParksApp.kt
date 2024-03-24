@@ -17,6 +17,7 @@
 package me.haile.nationalparks.compose
 
 import LegoCardScreen
+import LegoChipScreen
 import LegoScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -220,11 +221,19 @@ fun NationalParksNavHost(
                     navController.navigate(
                         Screen.LegoCard.createRoute("Hello Card")
                     )
+                }, onShowChipButtonClicked = {
+                    navController.navigate(
+                        Screen.LegoChip.route
+                    )
                 })
             }
 
             composable(route = Screen.LegoCard.route) {
                 LegoCardScreen()
+            }
+
+            composable(route = Screen.LegoChip.route) {
+                LegoChipScreen()
             }
         }
     }

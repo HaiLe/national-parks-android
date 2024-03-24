@@ -95,6 +95,14 @@ sealed class Screen(
         fun createRoute(content: String) = "legoCard/${content}"
     }
 
+    data object LegoChip : Screen(
+        route = "legoChip/{query}", navArguments = listOf(navArgument("query") {
+            type = NavType.StringType
+        }), title = "Lego - Chip"
+    ) {
+        fun createRoute(content: String) = "legoChip/${content}"
+    }
+
     data object PlanPhotographyTrip : Screen(
         route = "plan/{query}", navArguments = listOf(navArgument("query") {
             type = NavType.StringType

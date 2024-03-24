@@ -28,7 +28,8 @@ import me.haile.nationalparks.utils.Logging
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LegoScreen(onShowCardButtonClicked: () -> Unit) {
+fun LegoScreen(onShowCardButtonClicked: () -> Unit,
+               onShowChipButtonClicked: () -> Unit) {
     Column (modifier = Modifier
         .padding(16.dp)
         .verticalScroll(rememberScrollState())) {
@@ -37,8 +38,8 @@ fun LegoScreen(onShowCardButtonClicked: () -> Unit) {
             Text("Show Card")
         }
 
-        FilledTonalButton(onClick = { onButtonClicked() }) {
-            Text("Button")
+        FilledTonalButton(onClick = { onShowChipButtonClicked() }) {
+            Text("Show Chip")
         }
 
         OutlinedButton(onClick = { onButtonClicked() }) {
